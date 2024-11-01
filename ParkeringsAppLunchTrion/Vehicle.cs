@@ -11,11 +11,13 @@ namespace ParkeringsAppLunchTrion
         public string RegNr { get; set; }
 
         public string Color { get; set; }   
-
-        public Vehicle(string regNr, string color)
+        public int ParkingTime { get; set; }
+        
+        public Vehicle(string regNr, string color, int parkingTime)
         {
             RegNr = regNr;
             Color = color;
+            ParkingTime = parkingTime;
         }
     }
 
@@ -23,7 +25,7 @@ namespace ParkeringsAppLunchTrion
     {
         public bool Electric { get; set; }
 
-        public Car(string regNr, string color, bool electric) : base(regNr, color)
+        public Car(string regNr, string color, bool electric, int parkingTime) : base(regNr, color, parkingTime)
         {
             Electric = electric;
         }
@@ -33,9 +35,10 @@ namespace ParkeringsAppLunchTrion
     {
         public int NrSeats { get; set; }
 
-        public Bus(string regNr, string color, int nrSeats) : base (regNr, color)
+        public Bus(string regNr, string color, int nrSeats, int parkingTime) : base (regNr, color, parkingTime)
         {
             NrSeats = nrSeats;
+            
         }
     }
 
@@ -43,7 +46,7 @@ namespace ParkeringsAppLunchTrion
     {
         public string Brand { get; set; }
 
-        public MC(string regNr, string color, string brand) : base(regNr, color)
+        public MC(string regNr, string color, string brand, int parkingTime) : base(regNr, color, parkingTime)
         {
             Brand = brand;
         }
