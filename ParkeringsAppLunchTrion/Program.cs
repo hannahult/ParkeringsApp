@@ -6,18 +6,21 @@ namespace ParkeringsAppLunchTrion
     {
         static void Main(string[] args)
         {
-            string[] parkingLots = new string[25];
+            //string[] parkingLots = new string[25];
+
+            ParkingLot parkingLot = new ParkingLot();
+
             List<Vehicle> vehicles = new List<Vehicle>();
 
-            parkingLots = Helpers.VehicleCheckIn(parkingLots, vehicles);
+            List<MC> mCs = new List<MC>();
+
+            //parkingLots = 
+            Helpers.VehicleCheckIn(parkingLot, vehicles, mCs);
 
 
             while (true)
             {
-                for (int i = 0; i < parkingLots.Length; i++)
-                {
-                    Console.WriteLine(parkingLots[i]);
-                }
+                
 
                 foreach (Vehicle vehicle in vehicles)
                 {

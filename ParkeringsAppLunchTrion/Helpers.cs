@@ -10,8 +10,22 @@ namespace ParkeringsAppLunchTrion
 {
     public class Helpers
     {
-        public static string[] VehicleCheckIn(string[] parkingLots, List<Vehicle> vehicles)
+        public static void VehicleCheckIn(ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
+            
+            int randomVehicle = Random.Shared.Next(0, 3);
+            switch (randomVehicle)
+            {
+                case 0:
+                    Console.WriteLine("En bil rullar in på parkeringen");
+                    break;
+                case 1:
+                    Console.WriteLine("En buss rullar in på parkeringen");
+                    break;
+                case 2:
+                    Console.WriteLine("En MC rullar in på parkeringen");
+                    break;
+            }
             Console.WriteLine("Ange registreringsnummer: ");
             string regNumber = Console.ReadLine();
 
@@ -24,8 +38,6 @@ namespace ParkeringsAppLunchTrion
             {
                 Console.WriteLine("Du har inte angett sekunder med siffor");
             }
-
-            int randomVehicle = Random.Shared.Next(0, 3);
 
             switch (randomVehicle)
             {
@@ -40,35 +52,15 @@ namespace ParkeringsAppLunchTrion
                         case '1':
                             Car car1 = new Car(regNumber, vehicleColor, true, parkingTime);
                             vehicles.Add(car1);
-                            for (int i = 0; i < parkingLots.Length; i++)
-                            {
-                                if (parkingLots[i] == null)
-                                {
-                                    parkingLots[i] = "Plats " + (i + 1) + "\t\t" + car1.GetType().Name + "\t" + regNumber + "\t" + vehicleColor + "\t" + "Elbil" + "\t" + "sekunder kvar";
-                                    Console.WriteLine(parkingLots[i]);
-                                    break;
-                                }
-                            }
+                            ParkingLot.ParkVehicle(parkingLot, car1, mCs);
                             break;
 
                         case '2':
                             Car car2 = new Car(regNumber, vehicleColor, false, parkingTime);
                             vehicles.Add(car2);
-                            for (int i = 0; i < parkingLots.Length; i++)
-                            {
-                                if (parkingLots[i] == null)
-                                {
-
-                                    parkingLots[i] = "Plats " + (i + 1) + "\t\t" + car2.GetType().Name + "\t" + regNumber + "\t" + vehicleColor + "\t" + "Bil" + "\t" + parkingTime + " sekunder kvar";
-                                    Console.WriteLine(parkingLots[i]);
-
-                                    break;
-                                }
-                            }
+                            ParkingLot.ParkVehicle(parkingLot, car2, mCs);
                             break;
-
                     }
-
                     break;
 
                 case 1: //Buss
@@ -80,15 +72,7 @@ namespace ParkeringsAppLunchTrion
                     }
                     Bus bus1 = new Bus(regNumber, vehicleColor, numberOfSeats, parkingTime);
                     vehicles.Add(bus1);
-                    for (int i = 0; i < parkingLots.Length; i++)
-                    {
-                        if (parkingLots[i] == null)
-                        {
-                            parkingLots[i] = "Plats " + (i + 1) + "\t\t" + bus1.GetType().Name + "\t" + regNumber + "\t" + vehicleColor + "\t" + "Antal platser: " + numberOfSeats + "\t" + parkingTime + " sekunder kvar";
-                            Console.WriteLine(parkingLots[i]);
-                            break;
-                        }
-                    }
+                    ParkingLot.ParkVehicle(parkingLot, bus1, mCs);
                     break;
 
                 case 2: //MC
@@ -97,21 +81,12 @@ namespace ParkeringsAppLunchTrion
 
                     MC mc1 = new MC(regNumber, vehicleColor, mcBrand, parkingTime);
                     vehicles.Add(mc1);
-                    for (int i = 0; i < parkingLots.Length; i++)
-                    {
-                        if (parkingLots[i] == null)
-                        {
-                            parkingLots[i] = "Plats " + (i + 1) + "\t\t" + mc1.GetType().Name + "\t" + regNumber + "\t" + vehicleColor + "\t" + mcBrand + "\t" + parkingTime + " sekunder kvar";
-                            Console.WriteLine(parkingLots[i]);
-                            break;
-                        }
-                    }
+                    mCs.Add(mc1);
+                    ParkingLot.ParkVehicle(parkingLot, mc1, mCs);
                     break;
             }
-            return parkingLots;
+            return;
 
         }
-
-        
     }
 }

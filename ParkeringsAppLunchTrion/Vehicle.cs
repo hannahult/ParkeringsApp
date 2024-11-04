@@ -9,9 +9,9 @@ namespace ParkeringsAppLunchTrion
     public class Vehicle
     {
         public string RegNr { get; set; }
-
         public string Color { get; set; }   
         public int ParkingTime { get; set; }
+        public int ParkingSpot { get; set; }
         
         public Vehicle(string regNr, string color, int parkingTime)
         {
