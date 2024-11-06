@@ -11,7 +11,10 @@ namespace ParkeringsAppLunchTrion
     {
         public static void ParkingmanView(List<Vehicle> vehicles)
         {
+            bool exit = false;
 
+            while (exit == false)
+            {
 
                 foreach (Vehicle vehicle in vehicles)
                 {
@@ -34,17 +37,24 @@ namespace ParkeringsAppLunchTrion
                         Console.Write(((MC)vehicle).Brand);
                     }
 
-                    Console.Write("\t" + vehicle.ParkingTime + " sek kvar");
 
                     if (vehicle.ParkingTime > 0)
                     {
+                        Console.Write("\t" + vehicle.ParkingTime + " sek kvar");
                         vehicle.ParkingTime--;
+                    }
+
+                    else if (vehicle.ParkingTime == 0)
+                    {
+                        Console.Write("\tTiden är ute");
                     }
 
                 }
                 Thread.Sleep(1000);
                 Console.Clear();
 
+                //Komma ut från loopen
+            }
             
         }
 

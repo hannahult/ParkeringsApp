@@ -85,6 +85,7 @@ namespace ParkeringsAppLunchTrion
                     ParkingLot.ParkVehicle(parkingLot, mc1, mCs);
                     break;
             }
+            Thread.Sleep(3000);
             return;
 
         }

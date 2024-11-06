@@ -27,7 +27,7 @@ namespace ParkeringsAppLunchTrion
                 if (parkingLot.ParkingSpots[i] == 1 && vehicle is MC)
                 {
                     foreach (MC mc in mCs)
-                    { //testa om det funkar att bara skriva i
+                    { 
                         if (mc.ParkingSpot == i)
                         {
                             vehicle.ParkingSpot = i;

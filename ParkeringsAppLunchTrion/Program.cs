@@ -2,6 +2,10 @@
 
 namespace ParkeringsAppLunchTrion
 {
+
+    //Personklass - komma ut från whileloop
+    //Personklass - tiden ska ticka ner universalt
+
     internal class Program
     {
         static void Main(string[] args)
@@ -21,14 +25,10 @@ namespace ParkeringsAppLunchTrion
             while (true)
             {
 
-                Person.ParkingmanView(vehicles);
-
-
-
                 Person.CostumerView(parkingLot, vehicles, mCs);
 
 
-
+                Person.ParkingmanView(vehicles);
 
 
             }
