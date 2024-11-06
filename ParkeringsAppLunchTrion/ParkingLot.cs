@@ -86,7 +86,7 @@ namespace ParkeringsAppLunchTrion
             }
             else if (vehicle is Bus)
             {
-                for (int i = 0; i < parkingLot.ParkingSpots.Length; i++)
+                for (int i = 0; i < parkingLot.ParkingSpots.Length - 1; i++)
                 {
                     if (parkingLot.ParkingSpots[i] == 0 && parkingLot.ParkingSpots[i + 1] == 0)
                     {
