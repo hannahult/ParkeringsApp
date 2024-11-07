@@ -15,9 +15,18 @@ namespace ParkeringsAppLunchTrion
 
             while (exit == false)
             {
+                foreach (Vehicle vehicle in vehicles)
+                {
+                    if (vehicle.ParkingTime == 0)
+                    {
+                        Console.WriteLine("Tiden är ute för fordon " + vehicle.RegNr + " på plats " + (vehicle.ParkingSpot + 1));
+                    }
+
+                }
 
                 foreach (Vehicle vehicle in vehicles)
                 {
+
                     Console.Write("\nPlats " + (vehicle.ParkingSpot + 1) + (vehicle is Bus ? " & " + (vehicle.ParkingSpot + 2) : "") + "\t" + vehicle.GetType().Name + "\t" + vehicle.RegNr + "\t" + vehicle.Color + "\t");
 
 

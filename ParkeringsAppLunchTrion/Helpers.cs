@@ -56,7 +56,7 @@ namespace ParkeringsAppLunchTrion
             Console.WriteLine("Hur länge vill du parkera i sekunder? ");
 
             bool lyckad1 = false;
-            int parkingTime;
+            int parkingTime = 0;
             while (lyckad1 == false)
             {
                 lyckad1 = Int32.TryParse(Console.ReadLine(), out parkingTime);
@@ -95,7 +95,7 @@ namespace ParkeringsAppLunchTrion
                 case '1': //Buss
                     Console.WriteLine("Hur många platser är det i bussen?");
                     bool lyckad = false;
-                    int numberOfSeats;
+                    int numberOfSeats = 0;
                     while (lyckad == false)
                     {
                         lyckad = Int32.TryParse(Console.ReadLine(), out numberOfSeats);
