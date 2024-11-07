@@ -52,11 +52,18 @@ namespace ParkeringsAppLunchTrion
             Console.WriteLine("Ange färg på ditt fordon: ");
             string vehicleColor = Console.ReadLine();
 
+            
             Console.WriteLine("Hur länge vill du parkera i sekunder? ");
-            bool lyckad1 = Int32.TryParse(Console.ReadLine(), out int parkingTime);
-            if (!lyckad1)
+
+            bool lyckad1 = false;
+            int parkingTime;
+            while (lyckad1 == false)
             {
-                Console.WriteLine("Du har inte angett sekunder med siffor! ");
+                lyckad1 = Int32.TryParse(Console.ReadLine(), out parkingTime);
+                if (!lyckad1)
+                {
+                    Console.WriteLine("Du har inte angett sekunder med siffor! ");
+                }
             }
 
             //switch (randomVehicle)
@@ -87,10 +94,15 @@ namespace ParkeringsAppLunchTrion
 
                 case '1': //Buss
                     Console.WriteLine("Hur många platser är det i bussen?");
-                    bool lyckad = Int32.TryParse(Console.ReadLine(), out int numberOfSeats);
-                    if (!lyckad)
+                    bool lyckad = false;
+                    int numberOfSeats;
+                    while (lyckad == false)
                     {
-                        Console.WriteLine("Du har inte angett antal med siffor");
+                        lyckad = Int32.TryParse(Console.ReadLine(), out numberOfSeats);
+                        if (!lyckad)
+                        {
+                            Console.WriteLine("Du har inte angett antal med siffor, ");
+                        }
                     }
                     Bus bus1 = new Bus(regNumber, vehicleColor, numberOfSeats, parkingTime);
                     vehicles.Add(bus1);
