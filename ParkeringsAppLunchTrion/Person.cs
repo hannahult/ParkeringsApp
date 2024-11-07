@@ -18,7 +18,8 @@ namespace ParkeringsAppLunchTrion
 
                 foreach (Vehicle vehicle in vehicles)
                 {
-                    Console.Write("\nPlats " + (vehicle.ParkingSpot + 1) + "\t" + vehicle.GetType().Name + "\t" + vehicle.RegNr + "\t" + vehicle.Color + "\t");
+                    Console.Write("\nPlats " + (vehicle.ParkingSpot + 1) + (vehicle is Bus ? " & " + (vehicle.ParkingSpot + 2) : "") + "\t" + vehicle.GetType().Name + "\t" + vehicle.RegNr + "\t" + vehicle.Color + "\t");
+
 
                     if (vehicle is Car && ((Car)vehicle).Electric == true)
                     {
@@ -50,6 +51,14 @@ namespace ParkeringsAppLunchTrion
                     }
 
                 }
+                if (Console.KeyAvailable) // Non-blocking peek
+                {
+                    var key = Console.ReadKey(true);
+                    exit = true;
+
+                }
+                Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
+               
                 Thread.Sleep(1000);
                 Console.Clear();
 
@@ -79,7 +88,7 @@ namespace ParkeringsAppLunchTrion
                     {
                         if (givenRegNr == vehicle.RegNr)
                         {
-                            Console.WriteLine("Du har plats " + vehicle.ParkingSpot + "\t din kvarvarande tid är: " + vehicle.ParkingTime);
+                            Console.WriteLine("Du har plats " + (vehicle.ParkingSpot + 1) + "\t din kvarvarande tid är: " + vehicle.ParkingTime);
                             //tiden går inte neråt
                         }
                     }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Markup;
+﻿using System.Security.Cryptography;
+using System.Windows.Markup;
 
 namespace ParkeringsAppLunchTrion
 {
@@ -21,14 +22,35 @@ namespace ParkeringsAppLunchTrion
             //parkingLots = 
             
 
-
+            Helpers.AddTestVehicles(parkingLot, vehicles, mCs);
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Välkommen till parkeringshuset! ");
+                Console.WriteLine("[1] Kund");
+                Console.WriteLine("[2] Parkeringsvakt");
+                Console.WriteLine("[3] Chef");
+                ConsoleKeyInfo key = Console.ReadKey();
+                Console.Clear();
+                switch (key.KeyChar)
+                {
+                    case '1':
+                        Person.CostumerView(parkingLot, vehicles, mCs);
+                        break;
 
-                Person.CostumerView(parkingLot, vehicles, mCs);
+                    case '2':
+                        Person.ParkingmanView(vehicles);
+                        break;
+
+                    case '3':
+
+                        break;
+                }
+
+                
 
 
-                Person.ParkingmanView(vehicles);
+               
 
 
             }

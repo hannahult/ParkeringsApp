@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,9 @@ namespace ParkeringsAppLunchTrion
             for (int i = 0; i < ParkingSpots.Length; i++)
             {
                 ParkingSpots[i] = 0;
+
             }
+            
         }
 
         public static void ParkVehicle(ParkingLot parkingLot, Vehicle vehicle, List<MC> mCs)
@@ -34,7 +37,7 @@ namespace ParkeringsAppLunchTrion
 
                             parkingLot.ParkingSpots[i] = 2;
 
-                            Console.WriteLine($"MC {vehicle.RegNr} parkerad på plats {i}.");
+                            Console.WriteLine($"MC {vehicle.RegNr} parkerad på plats {i +1}.");
 
                             return;
                         }
@@ -49,25 +52,25 @@ namespace ParkeringsAppLunchTrion
                         if (vehicle is Car)
                         {
                             vehicle.ParkingSpot = i;
-                            parkingLot.ParkingSpots[i] = 1;
+                            parkingLot.ParkingSpots[i] = 2;
 
-                            Console.WriteLine($"Bil {vehicle.RegNr} parkerad på plats {i}.");
+                            Console.WriteLine($"Bil {vehicle.RegNr} parkerad på plats {i + 1}.");
 
                         }
                         else if (vehicle is Bus)
                         {
                             vehicle.ParkingSpot = i;
-                            parkingLot.ParkingSpots[i] = 1;
-                            parkingLot.ParkingSpots[i+1] = 1;
+                            parkingLot.ParkingSpots[i] = 2;
+                            parkingLot.ParkingSpots[i+1] = 2;
 
-                            Console.WriteLine($"Buss {vehicle.RegNr} parkerad på plats {i} & {i+1}.");
+                            Console.WriteLine($"Buss {vehicle.RegNr} parkerad på plats {i +1} & {i+2}.");
                         }
                         else if (vehicle is MC)
                         {
                             vehicle.ParkingSpot = i;
                             parkingLot.ParkingSpots[i] = 1;
 
-                            Console.WriteLine($"MC {vehicle.RegNr} parkerad på plats {i}.");
+                            Console.WriteLine($"MC {vehicle.RegNr} parkerad på plats {i + 1}.");
                         }
                         return;
                     }
