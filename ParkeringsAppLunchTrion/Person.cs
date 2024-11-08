@@ -137,7 +137,7 @@ namespace ParkeringsAppLunchTrion
                                                 case 'B':
                                                 case 'b':
                                                     Console.WriteLine("Tack för din betalning!");
-                                                    //KOMMA UR WHILELOOPEN, tillbaka till meny
+                                                    //KOMMA UR WHILELOOPEN, vill tillbaka till startmeny
                                                     break;
 
                                             }
@@ -195,7 +195,7 @@ namespace ParkeringsAppLunchTrion
                 }
 
 
-                //BRYTA UT FRÅN WHILELOOPEN
+                //BRYTA UT FRÅN WHILELOOPEN, startmenyn
                 if (Console.KeyAvailable)
                 {
                     var key5 = Console.ReadKey(true);
