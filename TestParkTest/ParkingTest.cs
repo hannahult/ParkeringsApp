@@ -23,5 +23,14 @@ namespace TestParkTest
 
             Assert.AreEqual(expected, result);
         }
+
+        [TestMethod]
+        public void TestCalculatePrice()
+        {
+            double expected = 15;
+            double result = ParkeringsAppLunchTrion.Helpers.CalculatePrice(10);
+
+            Assert.AreEqual(expected, result);
+        }
     }
 }

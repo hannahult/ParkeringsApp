@@ -60,7 +60,7 @@ namespace ParkeringsAppLunchTrion
                     }
 
                 }
-                if (Console.KeyAvailable) // Non-blocking peek
+                if (Console.KeyAvailable)
                 {
                     var key = Console.ReadKey(true);
                     exit = true;
@@ -71,44 +71,49 @@ namespace ParkeringsAppLunchTrion
                 Thread.Sleep(1000);
                 Console.Clear();
 
-                //Komma ut från loopen
             }
             
         }
 
         public static void CostumerView(ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs) 
         {
-            Console.WriteLine("Är du ny kund [1]?");
-            Console.WriteLine("Är du befintligt kund [2]?");
+            bool exit2 = false;
 
-            ConsoleKeyInfo key = Console.ReadKey();
-            Console.Clear();
-            switch (key.KeyChar)
+            while (exit2 == false)
             {
-                case '1':
-                    Helpers.VehicleCheckIn(parkingLot, vehicles, mCs);
-                    break;
+                Console.WriteLine("Är du ny kund [1]?");
+                Console.WriteLine("Är du befintligt kund [2]?");
 
-                case '2':
+                ConsoleKeyInfo key = Console.ReadKey();
+                Console.Clear();
+                switch (key.KeyChar)
+                {
+                    case '1':
+                        Helpers.VehicleCheckIn(parkingLot, vehicles, mCs);
+                        break;
 
-                    bool lyckad2 = false;
-                    bool correct = false;
-                    while (lyckad2 == false)
-                    {
-                        Console.WriteLine("Ange ditt registreringsnummer: ");
-                        string givenRegNr = Console.ReadLine();
-                        givenRegNr = givenRegNr.ToUpper();
+                    case '2':
 
-                        foreach (Vehicle vehicle in vehicles)
+                        bool lyckad2 = false;
+                        bool correct = false;
+                        while (lyckad2 == false)
                         {
-                            
-                            if (givenRegNr == vehicle.RegNr)
+                            Console.WriteLine("Ange ditt registreringsnummer: ");
+                            string givenRegNr = Console.ReadLine();
+                            givenRegNr = givenRegNr.ToUpper();
+
+                            foreach (Vehicle vehicle in vehicles)
                             {
-                                correct = true;
-                            }
+
+                                if (givenRegNr == vehicle.RegNr)
+                                {
+                                    correct = true;
+                                }
                                 if (correct == true)
                                 {
                                     Console.WriteLine("Du har plats " + (vehicle.ParkingSpot + 1) + "\t din kvarvarande tid är: " + vehicle.ParkingTime);
+                                    double parkingCost = Helpers.CalculatePrice(vehicle.ParkingTime);
+                                    Console.WriteLine("Kostnaden för parkeringen blir: " + parkingCost + " kr.");
                                     int parkingTime = vehicle.ParkingTime;
                                     int startTime = vehicle.StartTime;
 
@@ -120,9 +125,24 @@ namespace ParkeringsAppLunchTrion
                                     switch (key1.KeyChar)
                                     {
                                         case '1':
-                                            int parkedTime = Helpers.CheckOut(parkingTime, startTime);
+                                            double parkedTime = Helpers.CheckOut(parkingTime, startTime);
+                                            double earlyParkingCost = Helpers.CalculatePrice(parkedTime);
+                                            Console.WriteLine("Den nya kostnaden vid tidigarelagd utcheckning blev: " + earlyParkingCost + " kr.");
+                                            Console.WriteLine("För att betala tryck [B]");
 
+                                            ConsoleKeyInfo key3 = Console.ReadKey();
+                                            Console.Clear();
+                                            switch (key3.KeyChar)
+                                            {
+                                                case 'B':
+                                                case 'b':
+                                                    Console.WriteLine("Tack för din betalning!");
+                                                    //KOMMA UR WHILELOOPEN, tillbaka till meny
+                                                    break;
+
+                                            }
                                             break;
+
 
                                         case '2':
                                             Console.WriteLine("Fyll i den tid du vill förlänga med i sekunder: ");
@@ -138,42 +158,58 @@ namespace ParkeringsAppLunchTrion
                                             }
                                             vehicle.ParkingTime = Helpers.ExtendTime(parkingTime, extendedTime);
                                             Console.WriteLine("Du har plats " + (vehicle.ParkingSpot + 1) + "\t din nya parkeringstid är: " + vehicle.ParkingTime);
+                                            double newParkingCost = Helpers.CalculatePrice(vehicle.ParkingTime);
+                                            Console.WriteLine("Den nya kostnaden för parkeringen är: " + newParkingCost + " kr.");
                                             break;
 
 
                                     }
                                 }
 
+                            }
+                            if (correct == false)
+                            {
+                                Console.WriteLine("Du har inte angett ett registreringsnummer som finns registrerat hos oss.");
+                            }
+
+                            Console.WriteLine("För att återgå till menyn tryck: [1]?");
+                            Console.WriteLine("För att försöka igen tryck: [2]?");
+
+                            ConsoleKeyInfo key2 = Console.ReadKey();
+                            Console.Clear();
+                            switch (key2.KeyChar)
+                            {
+                                case '1':
+                                    lyckad2 = false;
+                                    break;
+
+                                case '2':
+
+                                    break;
+
+                            }
+
                         }
-                        if (correct == false)
-                        {
-                            Console.WriteLine("Du har inte angett ett registreringsnummer som finns registrerat hos oss.");
-                        }
 
-                        Console.WriteLine("För att återgå till menyn tryck: [1]?");
-                        Console.WriteLine("För att försöka igen tryck: [2]?");
+                    break;
+                }
 
-                        ConsoleKeyInfo key2 = Console.ReadKey();
-                        Console.Clear();
-                        switch (key2.KeyChar)
-                        {
-                            case '1':
-                                lyckad2 = false;
-                                break;
 
-                            case '2':
+                //BRYTA UT FRÅN WHILELOOPEN
+                if (Console.KeyAvailable)
+                {
+                    var key5 = Console.ReadKey(true);
+                    exit2 = true;
 
-                                break;
+                }
+                Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
 
-                        }
+                //Thread.Sleep(1000);
+                Console.Clear();
 
-                    }
-                    
-                break;
             }
 
 
-            
         }
 
         public static void TheBossView()

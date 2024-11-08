@@ -142,6 +142,12 @@ namespace ParkeringsAppLunchTrion
 
         }
 
+        public static double CalculatePrice(double parkedTime)
+        {
+            parkedTime = Math.Abs(parkedTime);
+            return parkedTime * 1.5;
+        }
+
 
         public static void AddTestVehicles (ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
