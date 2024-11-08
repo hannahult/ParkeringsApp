@@ -12,12 +12,16 @@ namespace ParkeringsAppLunchTrion
         public string Color { get; set; }   
         public int ParkingTime { get; set; }
         public int ParkingSpot { get; set; }
-        
+
+        public int StartTime { get; set; }
+
         public Vehicle(string regNr, string color, int parkingTime)
         {
             RegNr = regNr;
             Color = color;
             ParkingTime = parkingTime;
+            StartTime = parkingTime;
+
         }
     }
 

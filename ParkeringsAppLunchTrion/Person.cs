@@ -90,19 +90,86 @@ namespace ParkeringsAppLunchTrion
                     break;
 
                 case '2':
-                    Console.WriteLine("Ange ditt registreringsnummer: ");
-                    string givenRegNr = Console.ReadLine();
 
-                    foreach (Vehicle vehicle in vehicles)
+                    bool lyckad2 = false;
+                    bool correct = false;
+                    while (lyckad2 == false)
                     {
-                        if (givenRegNr == vehicle.RegNr)
+                        Console.WriteLine("Ange ditt registreringsnummer: ");
+                        string givenRegNr = Console.ReadLine();
+                        givenRegNr = givenRegNr.ToUpper();
+
+                        foreach (Vehicle vehicle in vehicles)
                         {
-                            Console.WriteLine("Du har plats " + (vehicle.ParkingSpot + 1) + "\t din kvarvarande tid är: " + vehicle.ParkingTime);
-                            //tiden går inte neråt
+                            
+                            if (givenRegNr == vehicle.RegNr)
+                            {
+                                correct = true;
+                            }
+                                if (correct == true)
+                                {
+                                    Console.WriteLine("Du har plats " + (vehicle.ParkingSpot + 1) + "\t din kvarvarande tid är: " + vehicle.ParkingTime);
+                                    int parkingTime = vehicle.ParkingTime;
+                                    int startTime = vehicle.StartTime;
+
+                                    Console.WriteLine("Checka ut [1]?");
+                                    Console.WriteLine("Förlänga tiden [2]?");
+
+                                    ConsoleKeyInfo key1 = Console.ReadKey();
+                                    Console.Clear();
+                                    switch (key1.KeyChar)
+                                    {
+                                        case '1':
+                                            int parkedTime = Helpers.CheckOut(parkingTime, startTime);
+
+                                            break;
+
+                                        case '2':
+                                            Console.WriteLine("Fyll i den tid du vill förlänga med i sekunder: ");
+                                            bool lyckad = false;
+                                            int extendedTime = 0;
+                                            while (lyckad == false)
+                                            {
+                                                lyckad = Int32.TryParse(Console.ReadLine(), out extendedTime);
+                                                if (!lyckad)
+                                                {
+                                                    Console.WriteLine("Du har inte angett antal med siffor, ");
+                                                }
+                                            }
+                                            vehicle.ParkingTime = Helpers.ExtendTime(parkingTime, extendedTime);
+                                            Console.WriteLine("Du har plats " + (vehicle.ParkingSpot + 1) + "\t din nya parkeringstid är: " + vehicle.ParkingTime);
+                                            break;
+
+
+                                    }
+                                }
+
                         }
+                        if (correct == false)
+                        {
+                            Console.WriteLine("Du har inte angett ett registreringsnummer som finns registrerat hos oss.");
+                        }
+
+                        Console.WriteLine("För att återgå till menyn tryck: [1]?");
+                        Console.WriteLine("För att försöka igen tryck: [2]?");
+
+                        ConsoleKeyInfo key2 = Console.ReadKey();
+                        Console.Clear();
+                        switch (key2.KeyChar)
+                        {
+                            case '1':
+                                lyckad2 = false;
+                                break;
+
+                            case '2':
+
+                                break;
+
+                        }
+
                     }
                     
-                    break;
+                break;
             }
 
 

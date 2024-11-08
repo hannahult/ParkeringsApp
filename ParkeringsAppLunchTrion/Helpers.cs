@@ -125,6 +125,24 @@ namespace ParkeringsAppLunchTrion
 
         }
 
+        public static int CheckOut(int parkingTime, int startTime)
+        {
+            int parkedTime = startTime - parkingTime;
+
+            return parkedTime;
+        }
+
+
+        public static int ExtendTime(int parkingTime, int chosenTime)
+        {
+            
+            int extendedTime = parkingTime + chosenTime;
+
+            return extendedTime;
+
+        }
+
+
         public static void AddTestVehicles (ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
             Car testCar = new Car("abc123", "Blå", true, 250);
