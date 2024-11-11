@@ -50,6 +50,7 @@ namespace ParkeringsAppLunchTrion
 
                     if (vehicle.ParkingTime > 0)
                     {
+                        
                         Console.Write("\t" + vehicle.ParkingTime + " sek kvar");
                         vehicle.ParkingTime--;
                     }
@@ -115,7 +116,7 @@ namespace ParkeringsAppLunchTrion
                                     double parkingCost = Helpers.CalculatePrice(vehicles[i].ParkingTime);
                                     Console.WriteLine("Kostnaden för parkeringen blir: " + parkingCost + " kr.");
                                     int parkingTime = vehicles[i].ParkingTime;
-                                    int startTime = vehicles[i].StartTime;
+                                    //int startTime = vehicles[i].StartTime;
 
                                     Console.WriteLine("Checka ut [1]?");
                                     Console.WriteLine("Förlänga tiden [2]?");
@@ -125,7 +126,8 @@ namespace ParkeringsAppLunchTrion
                                     switch (key1.KeyChar)
                                     {
                                         case '1':
-                                            double parkedTime = Helpers.CheckOut(parkingTime, startTime, vehicles[i],parkingLot,vehicles,mCs);
+                                            DateTime checkOutTime = DateTime.Now;
+                                            double parkedTime = Helpers.CheckOut(checkOutTime, vehicles[i],parkingLot,vehicles,mCs);
                                             double earlyParkingCost = Helpers.CalculatePrice(parkedTime);
                                             Console.WriteLine("Kostnaden för den parkerade tiden blev: " + earlyParkingCost + " kr.");
                                             Console.WriteLine("För att betala tryck [B]");

@@ -125,10 +125,11 @@ namespace ParkeringsAppLunchTrion
 
         }
 
-        public static int CheckOut(int parkingTime, int startTime, Vehicle vehicle, ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
+        public static double CheckOut(DateTime checkOutTime, Vehicle vehicle, ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
-                     
-            int parkedTime = startTime - parkingTime;
+            TimeSpan timeSpan = checkOutTime - vehicle.StartingTime;
+
+            double parkedTime = timeSpan.TotalSeconds;
 
             if (vehicle is MC)
             {

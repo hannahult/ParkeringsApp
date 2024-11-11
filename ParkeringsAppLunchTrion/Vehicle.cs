@@ -12,8 +12,9 @@ namespace ParkeringsAppLunchTrion
         public string Color { get; set; }   
         public int ParkingTime { get; set; }
         public int ParkingSpot { get; set; }
-
         public int StartTime { get; set; }
+        public DateTime StartingTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public Vehicle(string regNr, string color, int parkingTime)
         {
@@ -21,6 +22,8 @@ namespace ParkeringsAppLunchTrion
             Color = color;
             ParkingTime = parkingTime;
             StartTime = parkingTime;
+            StartingTime = DateTime.Now;
+            EndTime = CalculateEndTime(parkingTime, StartingTime);
 
         }
     }
@@ -32,6 +35,7 @@ namespace ParkeringsAppLunchTrion
         public Car(string regNr, string color, bool electric, int parkingTime) : base(regNr, color, parkingTime)
         {
             Electric = electric;
+            
         }
     }
 
@@ -42,7 +46,7 @@ namespace ParkeringsAppLunchTrion
         public Bus(string regNr, string color, int nrSeats, int parkingTime) : base (regNr, color, parkingTime)
         {
             NrSeats = nrSeats;
-            
+
         }
     }
 
@@ -53,8 +57,17 @@ namespace ParkeringsAppLunchTrion
         public MC(string regNr, string color, string brand, int parkingTime) : base(regNr, color, parkingTime)
         {
             Brand = brand;
+        
         }
 
+    }
+
+    public static DateTime CalculateEndTime(int parkingTime, DateTime startingTime)
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(parkingTime);
+
+        DateTime endTime = startingTime + timeSpan;
+        return endTime;
     }
 
 
