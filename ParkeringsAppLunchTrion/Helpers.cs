@@ -74,8 +74,7 @@ namespace ParkeringsAppLunchTrion
                     Console.WriteLine("Är det en elbil?");
                     Console.WriteLine("[1] ja");
                     Console.WriteLine("[2] nej");
-                    ConsoleKeyInfo key1 = Console.ReadKey();
-                    Console.Clear();
+                    ConsoleKeyInfo key1 = Console.ReadKey();                   
                     switch (key1.KeyChar)
                     {
                         case '1':
@@ -119,6 +118,7 @@ namespace ParkeringsAppLunchTrion
                     ParkingLot.ParkVehicle(parkingLot, mc1, mCs);
                     break;
             }
+
             Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
             Console.ReadKey();
             return;

@@ -25,6 +25,8 @@ namespace ParkeringsAppLunchTrion
 
         public static void ParkVehicle(ParkingLot parkingLot, Vehicle vehicle, List<MC> mCs)
         {
+            Console.Clear();
+
             for (int i = 0; i < parkingLot.ParkingSpots.Length; i++)
             {
                 if (parkingLot.ParkingSpots[i] == 1 && vehicle is MC)
