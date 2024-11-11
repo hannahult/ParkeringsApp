@@ -102,20 +102,20 @@ namespace ParkeringsAppLunchTrion
                             string givenRegNr = Console.ReadLine();
                             givenRegNr = givenRegNr.ToUpper();
 
-                            foreach (Vehicle vehicle in vehicles)
+                            for (int i = 0; i < vehicles.Count; i++)
                             {
 
-                                if (givenRegNr == vehicle.RegNr)
+                                if (givenRegNr == vehicles[i].RegNr)
                                 {
                                     correct = true;
                                 }
                                 if (correct == true)
                                 {
-                                    Console.WriteLine("Du har plats " + (vehicle.ParkingSpot + 1) + "\t din kvarvarande tid är: " + vehicle.ParkingTime);
-                                    double parkingCost = Helpers.CalculatePrice(vehicle.ParkingTime);
+                                    Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) + "\t din kvarvarande tid är: " + vehicles[i].ParkingTime);
+                                    double parkingCost = Helpers.CalculatePrice(vehicles[i].ParkingTime);
                                     Console.WriteLine("Kostnaden för parkeringen blir: " + parkingCost + " kr.");
-                                    int parkingTime = vehicle.ParkingTime;
-                                    int startTime = vehicle.StartTime;
+                                    int parkingTime = vehicles[i].ParkingTime;
+                                    int startTime = vehicles[i].StartTime;
 
                                     Console.WriteLine("Checka ut [1]?");
                                     Console.WriteLine("Förlänga tiden [2]?");
@@ -125,9 +125,9 @@ namespace ParkeringsAppLunchTrion
                                     switch (key1.KeyChar)
                                     {
                                         case '1':
-                                            double parkedTime = Helpers.CheckOut(parkingTime, startTime);
+                                            double parkedTime = Helpers.CheckOut(parkingTime, startTime, vehicles[i],parkingLot,vehicles,mCs);
                                             double earlyParkingCost = Helpers.CalculatePrice(parkedTime);
-                                            Console.WriteLine("Den nya kostnaden vid tidigarelagd utcheckning blev: " + earlyParkingCost + " kr.");
+                                            Console.WriteLine("Kostnaden för den parkerade tiden blev: " + earlyParkingCost + " kr.");
                                             Console.WriteLine("För att betala tryck [B]");
 
                                             ConsoleKeyInfo key3 = Console.ReadKey();
@@ -156,9 +156,9 @@ namespace ParkeringsAppLunchTrion
                                                     Console.WriteLine("Du har inte angett antal med siffor, ");
                                                 }
                                             }
-                                            vehicle.ParkingTime = Helpers.ExtendTime(parkingTime, extendedTime);
-                                            Console.WriteLine("Du har plats " + (vehicle.ParkingSpot + 1) + "\t din nya parkeringstid är: " + vehicle.ParkingTime);
-                                            double newParkingCost = Helpers.CalculatePrice(vehicle.ParkingTime);
+                                            vehicles[i].ParkingTime = Helpers.ExtendTime(parkingTime, extendedTime);
+                                            Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) + "\t din nya parkeringstid är: " + vehicles[i].ParkingTime);
+                                            double newParkingCost = Helpers.CalculatePrice(vehicles[i].ParkingTime);
                                             Console.WriteLine("Den nya kostnaden för parkeringen är: " + newParkingCost + " kr.");
                                             break;
 
@@ -180,7 +180,7 @@ namespace ParkeringsAppLunchTrion
                             switch (key2.KeyChar)
                             {
                                 case '1':
-                                    lyckad2 = true;
+                                    return;
                                     break;
 
                                 case '2':
@@ -204,10 +204,11 @@ namespace ParkeringsAppLunchTrion
                 }
                 Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
 
-                //Thread.Sleep(1000);
                 Console.Clear();
-
+                return;
             }
+
+            
 
 
         }
