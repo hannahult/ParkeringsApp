@@ -180,7 +180,7 @@ namespace ParkeringsAppLunchTrion
                             switch (key2.KeyChar)
                             {
                                 case '1':
-                                    lyckad2 = false;
+                                    lyckad2 = true;
                                     break;
 
                                 case '2':
