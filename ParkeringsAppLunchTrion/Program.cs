@@ -11,13 +11,13 @@ namespace ParkeringsAppLunchTrion
     {
         static void Main(string[] args)
         {
-            //string[] parkingLots = new string[25];
-
             ParkingLot parkingLot = new ParkingLot();
 
             List<Vehicle> vehicles = new List<Vehicle>();
 
             List<MC> mCs = new List<MC>();
+
+            int numberOfVehicles = 3;
 
             //parkingLots = 
             
@@ -35,7 +35,7 @@ namespace ParkeringsAppLunchTrion
                 switch (key.KeyChar)
                 {
                     case '1':
-                        Person.CostumerView(parkingLot, vehicles, mCs);
+                        numberOfVehicles = Person.CostumerView(parkingLot, vehicles, mCs, numberOfVehicles);
                         break;
 
                     case '2':
@@ -43,7 +43,7 @@ namespace ParkeringsAppLunchTrion
                         break;
 
                     case '3':
-
+                        Person.TheBossView(numberOfVehicles);
                         break;
                 }
 

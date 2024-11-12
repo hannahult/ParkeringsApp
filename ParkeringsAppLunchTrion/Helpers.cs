@@ -162,26 +162,33 @@ namespace ParkeringsAppLunchTrion
             return parkedTime * 1.5;
         }
 
+        public static int AddNumberOfVehicles(int numberOfVehicles)
+        {
+            numberOfVehicles++;
+
+            return numberOfVehicles;
+        }
+
 
         public static void AddTestVehicles (ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
-            Car testCar = new Car("abc123", "Blå", true, 250);
+            Car testCar = new Car("ABC123", "Blå", true, 250);
             vehicles.Add(testCar);
             testCar.ParkingSpot = 0;
-            parkingLot.ParkingSpots[0] = 2;
+            parkingLot.ParkingSpots[3] = 2;
 
-            MC testMC = new MC("def456", "Grå", "Yamaha", 200);
+            MC testMC = new MC("DEF456", "Grå", "Yamaha", 200);
             vehicles.Add(testMC);
             testMC.ParkingSpot = 1;
-            parkingLot.ParkingSpots[1] = 1;
+            parkingLot.ParkingSpots[4] = 1;
             mCs.Add(testMC);
             
 
-            Bus testBus = new Bus("ghi789", "Röd", 8, 230);
+            Bus testBus = new Bus("GHI789", "Röd", 8, 230);
             vehicles.Add(testBus);
             testBus.ParkingSpot = 2;
-            parkingLot.ParkingSpots[2] = 2;
-            parkingLot.ParkingSpots[3] = 2;
+            parkingLot.ParkingSpots[5] = 2;
+            parkingLot.ParkingSpots[6] = 2;
 
         }
 

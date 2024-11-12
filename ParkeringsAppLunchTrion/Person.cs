@@ -76,7 +76,7 @@ namespace ParkeringsAppLunchTrion
             
         }
 
-        public static void CostumerView(ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs) 
+        public static int CostumerView(ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs, int numberOfVehicles) 
         {
             bool exit2 = false;
 
@@ -91,6 +91,7 @@ namespace ParkeringsAppLunchTrion
                 {
                     case '1':
                         Helpers.VehicleCheckIn(parkingLot, vehicles, mCs);
+                        numberOfVehicles = Helpers.AddNumberOfVehicles(numberOfVehicles);
                         break;
 
                     case '2':
@@ -138,8 +139,7 @@ namespace ParkeringsAppLunchTrion
                                             {
                                                 case 'B':
                                                 case 'b':
-                                                    Console.WriteLine("Tack för din betalning!");
-                                                    //KOMMA UR WHILELOOPEN, vill tillbaka till startmeny
+                                                    Console.WriteLine("Tack för din betalning!");                                                   
                                                     break;
 
                                             }
@@ -182,8 +182,8 @@ namespace ParkeringsAppLunchTrion
                             switch (key2.KeyChar)
                             {
                                 case '1':
-                                    return;
-                                    break;
+                                    return numberOfVehicles;
+                                    
 
                                 case '2':
 
@@ -195,9 +195,7 @@ namespace ParkeringsAppLunchTrion
 
                     break;
                 }
-
-
-                //BRYTA UT FRÅN WHILELOOPEN, startmenyn
+               
                 if (Console.KeyAvailable)
                 {
                     var key5 = Console.ReadKey(true);
@@ -207,16 +205,24 @@ namespace ParkeringsAppLunchTrion
                 Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
 
                 Console.Clear();
-                return;
+                return numberOfVehicles;
             }
 
-            
-
+            return numberOfVehicles;
 
         }
 
-        public static void TheBossView()
+        public static void TheBossView(int numberOfVehicles)
         {
+            Console.WriteLine("Välkommen chefen!");
+            
+            Console.WriteLine("Totalt antal parkerade bilar idag: " + numberOfVehicles);
+            
+            Console.WriteLine("Dagens intäkter från parkeringar: ");
+
+            Console.WriteLine("Dagens intäkter från böter: ");
+
+            Console.WriteLine("Dagens totala intäkter: ");
 
         }
     }

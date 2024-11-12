@@ -32,5 +32,13 @@ namespace TestParkTest
 
             Assert.AreEqual(expected, result);
         }
+
+        [TestMethod]
+        public void TestAddNumberOfVehicles()
+        {
+            int expected = 4;
+            int result = ParkeringsAppLunchTrion.Helpers.AddNumberOfVehicles(3);
+            Assert.AreEqual(expected, result);
+        }
     }
 }
