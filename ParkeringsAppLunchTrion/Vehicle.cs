@@ -26,6 +26,14 @@ namespace ParkeringsAppLunchTrion
             EndTime = CalculateEndTime(parkingTime, StartingTime);
 
         }
+
+        public static DateTime CalculateEndTime(int parkingTime, DateTime startingTime)
+        {
+            TimeSpan timeSpan = TimeSpan.FromSeconds(parkingTime);
+
+            DateTime endTime = startingTime + timeSpan;
+            return endTime;
+        }
     }
 
     public class Car : Vehicle
@@ -61,14 +69,5 @@ namespace ParkeringsAppLunchTrion
         }
 
     }
-
-    public static DateTime CalculateEndTime(int parkingTime, DateTime startingTime)
-    {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(parkingTime);
-
-        DateTime endTime = startingTime + timeSpan;
-        return endTime;
-    }
-
 
 }

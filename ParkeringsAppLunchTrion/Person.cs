@@ -216,13 +216,16 @@ namespace ParkeringsAppLunchTrion
         {
             Console.WriteLine("Välkommen chefen!");
             
-            Console.WriteLine("Totalt antal parkerade bilar idag: " + numberOfVehicles);
+            Console.WriteLine("\nTotalt antal parkerade bilar idag: " + numberOfVehicles);
             
-            Console.WriteLine("Dagens intäkter från parkeringar: ");
+            Console.WriteLine("\nDagens intäkter från parkeringar: ");
 
-            Console.WriteLine("Dagens intäkter från böter: ");
+            Console.WriteLine("\nDagens intäkter från böter: ");
 
-            Console.WriteLine("Dagens totala intäkter: ");
+            Console.WriteLine("\nDagens totala intäkter: ");
+
+            Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
+            Console.ReadKey();
 
         }
     }

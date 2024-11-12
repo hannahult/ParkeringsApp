@@ -4,9 +4,6 @@ using System.Windows.Markup;
 namespace ParkeringsAppLunchTrion
 {
 
-    //Personklass - komma ut från whileloop
-    //Personklass - tiden ska ticka ner universalt
-
     internal class Program
     {
         static void Main(string[] args)
