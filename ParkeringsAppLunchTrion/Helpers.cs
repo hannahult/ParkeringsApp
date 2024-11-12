@@ -125,11 +125,18 @@ namespace ParkeringsAppLunchTrion
 
         }
 
-        public static double CheckOut(DateTime checkOutTime, Vehicle vehicle, ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
+        public static double CalculateParkedTime(DateTime checkOutTime, Vehicle vehicle)
         {
             TimeSpan timeSpan = checkOutTime - vehicle.StartingTime;
 
-            double parkedTime = timeSpan.TotalSeconds;
+            int parkedTime = (int)timeSpan.TotalSeconds;
+
+            return parkedTime;
+        }
+
+        public static void CheckOut(Vehicle vehicle, ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
+        {
+            
 
             if (vehicle is MC)
             {
@@ -143,7 +150,7 @@ namespace ParkeringsAppLunchTrion
 
             vehicles.Remove(vehicle);
 
-            return parkedTime;
+            
         }
 
 
@@ -174,19 +181,19 @@ namespace ParkeringsAppLunchTrion
         {
             Car testCar = new Car("ABC123", "Blå", true, 250);
             vehicles.Add(testCar);
-            testCar.ParkingSpot = 0;
+            testCar.ParkingSpot = 3;
             parkingLot.ParkingSpots[3] = 2;
 
             MC testMC = new MC("DEF456", "Grå", "Yamaha", 200);
             vehicles.Add(testMC);
-            testMC.ParkingSpot = 1;
+            testMC.ParkingSpot = 4;
             parkingLot.ParkingSpots[4] = 1;
             mCs.Add(testMC);
             
 
             Bus testBus = new Bus("GHI789", "Röd", 8, 230);
             vehicles.Add(testBus);
-            testBus.ParkingSpot = 2;
+            testBus.ParkingSpot = 5;
             parkingLot.ParkingSpots[5] = 2;
             parkingLot.ParkingSpots[6] = 2;
 

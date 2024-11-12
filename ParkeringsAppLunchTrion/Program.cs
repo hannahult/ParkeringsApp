@@ -1,11 +1,13 @@
 ﻿using System.Security.Cryptography;
 using System.Windows.Markup;
 
+
+
 namespace ParkeringsAppLunchTrion
 {
-
-    internal class Program
+    public class Program
     {
+        
         static void Main(string[] args)
         {
             ParkingLot parkingLot = new ParkingLot();
@@ -14,7 +16,7 @@ namespace ParkeringsAppLunchTrion
 
             List<MC> mCs = new List<MC>();
 
-            int numberOfVehicles = 3;
+            Income income = new Income();
 
             //parkingLots = 
             
@@ -32,7 +34,7 @@ namespace ParkeringsAppLunchTrion
                 switch (key.KeyChar)
                 {
                     case '1':
-                        numberOfVehicles = Person.CostumerView(parkingLot, vehicles, mCs, numberOfVehicles);
+                        Person.CostumerView(parkingLot, vehicles, mCs, income);
                         break;
 
                     case '2':
@@ -40,7 +42,7 @@ namespace ParkeringsAppLunchTrion
                         break;
 
                     case '3':
-                        Person.TheBossView(numberOfVehicles);
+                        Person.TheBossView(income);
                         break;
                 }
 

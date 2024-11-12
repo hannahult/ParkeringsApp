@@ -27,7 +27,7 @@ namespace ParkeringsAppLunchTrion
                 foreach (Vehicle vehicle in vehicles)
                 {
 
-                    Console.Write("\nPlats " + (vehicle.ParkingSpot + 1) + (vehicle is Bus ? " & " + (vehicle.ParkingSpot + 2) : "") + "\t" + vehicle.GetType().Name + "\t" + vehicle.RegNr + "\t" + vehicle.Color + "\t");
+                    Console.Write("\nPlats\t" + (vehicle.ParkingSpot + 1) + (vehicle is Bus ? " & " + (vehicle.ParkingSpot + 2) : "") + "\t" + vehicle.GetType().Name + "\t" + vehicle.RegNr + "\t" + vehicle.Color + "\t");
 
 
                     if (vehicle is Car && ((Car)vehicle).Electric == true)
@@ -50,9 +50,9 @@ namespace ParkeringsAppLunchTrion
 
                     if (vehicle.ParkingTime > 0)
                     {
-                        
-                        Console.Write("\t" + vehicle.ParkingTime + " sek kvar");
-                        vehicle.ParkingTime--;
+                        TimeSpan timeSpan = vehicle.EndTime - DateTime.Now;
+                        int time = (int)timeSpan.TotalSeconds;
+                        Console.Write("\t" + time + " sek kvar");                       
                     }
 
                     else if (vehicle.ParkingTime == 0)
@@ -61,14 +61,34 @@ namespace ParkeringsAppLunchTrion
                     }
 
                 }
+
+                Console.WriteLine("\n\nFör att gå tillbaka till menyn tryck [M]");
+                Console.WriteLine("\nFör att bötfälla tryck [B]");
+
                 if (Console.KeyAvailable)
                 {
                     var key = Console.ReadKey(true);
-                    exit = true;
+                    if (key.KeyChar == 'm' || key.KeyChar == 'M')
+                    {
+                        exit = true;
+                    }
+                    else if (key.KeyChar == 'b' || key.KeyChar == 'B')
+                    {
+                        //Console.Clear();
+                        Console.WriteLine("Ange regNr på det fordon du vill bötfälla: ");
+                        string finedVehicle = Console.ReadLine();
+                        finedVehicle = finedVehicle.ToUpper();
 
+                        for (int i = 0; i < vehicles.Count; i++)
+                        {
+                            if (finedVehicle == vehicles[i].RegNr)
+                            {
+                                vehicles[i].ParkingCost += 500;
+                            }
+                        }
+                    }
                 }
-                Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
-               
+                       
                 Thread.Sleep(1000);
                 Console.Clear();
 
@@ -76,7 +96,7 @@ namespace ParkeringsAppLunchTrion
             
         }
 
-        public static int CostumerView(ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs, int numberOfVehicles) 
+        public static Income CostumerView(ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs, Income income) 
         {
             bool exit2 = false;
 
@@ -91,7 +111,7 @@ namespace ParkeringsAppLunchTrion
                 {
                     case '1':
                         Helpers.VehicleCheckIn(parkingLot, vehicles, mCs);
-                        numberOfVehicles = Helpers.AddNumberOfVehicles(numberOfVehicles);
+                        income.NumberOfVehicles = Helpers.AddNumberOfVehicles(income.NumberOfVehicles);
                         break;
 
                     case '2':
@@ -112,63 +132,77 @@ namespace ParkeringsAppLunchTrion
                                     correct = true;
                                 }
                                 if (correct == true)
-                                {
-                                    Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) + "\t din kvarvarande tid är: " + vehicles[i].ParkingTime);
-                                    double parkingCost = Helpers.CalculatePrice(vehicles[i].ParkingTime);
-                                    Console.WriteLine("Kostnaden för parkeringen blir: " + parkingCost + " kr.");
-                                    int parkingTime = vehicles[i].ParkingTime;
-                                    //int startTime = vehicles[i].StartTime;
-
-                                    Console.WriteLine("Checka ut [1]?");
-                                    Console.WriteLine("Förlänga tiden [2]?");
-
-                                    ConsoleKeyInfo key1 = Console.ReadKey();
-                                    Console.Clear();
-                                    switch (key1.KeyChar)
+                                {                                 
+                                    while (exit2 == false)
                                     {
-                                        case '1':
-                                            DateTime checkOutTime = DateTime.Now;
-                                            double parkedTime = Helpers.CheckOut(checkOutTime, vehicles[i],parkingLot,vehicles,mCs);
-                                            double earlyParkingCost = Helpers.CalculatePrice(parkedTime);
-                                            Console.WriteLine("Kostnaden för den parkerade tiden blev: " + earlyParkingCost + " kr.");
-                                            Console.WriteLine("För att betala tryck [B]");
+                                        Console.Clear();
+                                        
+                                        TimeSpan timeSpan = vehicles[i].EndTime - DateTime.Now;
+                                        int time = (int)timeSpan.TotalSeconds;
+                                        Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) +(vehicles[i] is Bus ? " & " + (vehicles[i].ParkingSpot + 2) : "") + "\nDin kvarvarande tid är: " + time);
 
-                                            ConsoleKeyInfo key3 = Console.ReadKey();
-                                            Console.Clear();
-                                            switch (key3.KeyChar)
+                                        TimeSpan timeSpan2 = DateTime.Now - vehicles[i].StartingTime;
+                                        int time2 = (int)timeSpan2.TotalSeconds;
+                                        Console.WriteLine("Kostnad för parkering hittills: " + (time2*1.5) + "kr (exklusive eventuella böter)");
+                                      
+                                        int parkingTime = vehicles[i].ParkingTime;
+
+                                        Console.WriteLine("\n\nChecka ut [1]?");
+                                        Console.WriteLine("Förlänga tiden [2]?");
+
+                                        if (Console.KeyAvailable)
+                                        {
+                                            var key1 = Console.ReadKey(true);
+                                            switch (key1.KeyChar)
                                             {
-                                                case 'B':
-                                                case 'b':
-                                                    Console.WriteLine("Tack för din betalning!");                                                   
+                                                case '1':
+                                                    DateTime checkOutTime = DateTime.Now;
+                                                    double parkedTime = Helpers.CalculateParkedTime(checkOutTime, vehicles[i]);
+                                                    vehicles[i].ParkingCost += Helpers.CalculatePrice(parkedTime);
+                                                    Console.WriteLine("Kostnaden för den parkerade tiden blev: " + vehicles[i].ParkingCost + " kr.");
+                                                    Console.WriteLine("För att betala tryck [B]");
+
+                                                    ConsoleKeyInfo key3 = Console.ReadKey();
+                                                    Console.Clear();
+                                                    switch (key3.KeyChar)
+                                                    {
+                                                        case 'B':
+                                                        case 'b':
+                                                            Console.WriteLine("Tack för din betalning!");
+                                                            income.ParkingIncome += vehicles[i].ParkingCost;
+                                                            Helpers.CheckOut(vehicles[i], parkingLot, vehicles, mCs);
+                                                            exit2 = true;
+                                                            break;
+                                                    }
                                                     break;
 
-                                            }
-                                            break;
 
-
-                                        case '2':
-                                            Console.WriteLine("Fyll i den tid du vill förlänga med i sekunder: ");
-                                            bool lyckad = false;
-                                            int extendedTime = 0;
-                                            while (lyckad == false)
-                                            {
-                                                lyckad = Int32.TryParse(Console.ReadLine(), out extendedTime);
-                                                if (!lyckad)
-                                                {
-                                                    Console.WriteLine("Du har inte angett antal med siffor, ");
+                                                case '2':
+                                                    Console.WriteLine("Fyll i den tid du vill förlänga med i sekunder: ");
+                                                    bool lyckad = false;
+                                                    int extendedTime = 0;
+                                                    while (lyckad == false)
+                                                    {
+                                                        lyckad = Int32.TryParse(Console.ReadLine(), out extendedTime);
+                                                        if (!lyckad)
+                                                        {
+                                                            Console.WriteLine("Du har inte angett antal med siffor, ");
+                                                        }
+                                                    }
+                                                    vehicles[i].ParkingTime = Helpers.ExtendTime(parkingTime, extendedTime);
+                                                    Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) + "\t din nya parkeringstid är: " + vehicles[i].ParkingTime);
+                                                    double newParkingCost = Helpers.CalculatePrice(vehicles[i].ParkingTime);
+                                                    Console.WriteLine("Den nya kostnaden för parkeringen är: " + newParkingCost + " kr.");
+                                                    exit2 = true;
+                                                    break;
                                                 }
                                             }
-                                            vehicles[i].ParkingTime = Helpers.ExtendTime(parkingTime, extendedTime);
-                                            Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) + "\t din nya parkeringstid är: " + vehicles[i].ParkingTime);
-                                            double newParkingCost = Helpers.CalculatePrice(vehicles[i].ParkingTime);
-                                            Console.WriteLine("Den nya kostnaden för parkeringen är: " + newParkingCost + " kr.");
-                                            break;
-
+                                        Thread.Sleep(1000);
+                                        }
 
                                     }
-                                }
 
-                            }
+                                }
                             if (correct == false)
                             {
                                 Console.WriteLine("Du har inte angett ett registreringsnummer som finns registrerat hos oss.");
@@ -182,7 +216,8 @@ namespace ParkeringsAppLunchTrion
                             switch (key2.KeyChar)
                             {
                                 case '1':
-                                    return numberOfVehicles;
+                                    return income;
+                                    break;
                                     
 
                                 case '2':
@@ -205,24 +240,24 @@ namespace ParkeringsAppLunchTrion
                 Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
 
                 Console.Clear();
-                return numberOfVehicles;
+                return income;
             }
 
-            return numberOfVehicles;
+            return income;
 
         }
 
-        public static void TheBossView(int numberOfVehicles)
+        public static void TheBossView(Income income)
         {
             Console.WriteLine("Välkommen chefen!");
             
-            Console.WriteLine("\nTotalt antal parkerade bilar idag: " + numberOfVehicles);
+            Console.WriteLine("\nTotalt antal parkerade bilar idag: " + income.NumberOfVehicles);
             
-            Console.WriteLine("\nDagens intäkter från parkeringar: ");
+            Console.WriteLine("\nDagens intäkter från parkeringar: " + income.ParkingIncome + "kr");
 
-            Console.WriteLine("\nDagens intäkter från böter: ");
+            Console.WriteLine("\nDagens intäkter från böter: " + income.FineIncome + "kr");
 
-            Console.WriteLine("\nDagens totala intäkter: ");
+            Console.WriteLine("\nDagens totala intäkter: " + income.TotalIncome + "kr");
 
             Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
             Console.ReadKey();
