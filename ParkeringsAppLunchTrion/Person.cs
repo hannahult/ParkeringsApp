@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace ParkeringsAppLunchTrion
 {
     public class Person
     {
-        public static void ParkingmanView(List<Vehicle> vehicles)
+        public static void ParkingmanView(List<Vehicle> vehicles, Income income)
         {
             bool exit = false;
 
@@ -47,17 +48,23 @@ namespace ParkeringsAppLunchTrion
                         Console.Write(((MC)vehicle).Brand);
                     }
 
+                    TimeSpan timeSpan = vehicle.EndTime - DateTime.Now;
+                    int time = (int)timeSpan.TotalSeconds;
 
-                    if (vehicle.ParkingTime > 0)
+                    if (time > 0)
                     {
-                        TimeSpan timeSpan = vehicle.EndTime - DateTime.Now;
-                        int time = (int)timeSpan.TotalSeconds;
+                       
                         Console.Write("\t" + time + " sek kvar");                       
                     }
 
-                    else if (vehicle.ParkingTime == 0)
+                    else if (time <= 0)
                     {
                         Console.Write("\tTiden är ute");
+                        
+                    }
+                    if (vehicle.Fined == true)
+                    {
+                        Console.Write("\tBötfälld");
                     }
 
                 }
@@ -83,7 +90,9 @@ namespace ParkeringsAppLunchTrion
                         {
                             if (finedVehicle == vehicles[i].RegNr)
                             {
-                                vehicles[i].ParkingCost += 500;
+                                vehicles[i].Fined = true;
+                                income.FineIncome += 500;
+                                Console.WriteLine("Fordon " + vehicles[i].RegNr + " är bötfällt.");
                             }
                         }
                     }
@@ -96,7 +105,7 @@ namespace ParkeringsAppLunchTrion
             
         }
 
-        public static Income CostumerView(ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs, Income income) 
+        public static void CostumerView(ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs, Income income) 
         {
             bool exit2 = false;
 
@@ -160,6 +169,16 @@ namespace ParkeringsAppLunchTrion
                                                     double parkedTime = Helpers.CalculateParkedTime(checkOutTime, vehicles[i]);
                                                     vehicles[i].ParkingCost += Helpers.CalculatePrice(parkedTime);
                                                     Console.WriteLine("Kostnaden för den parkerade tiden blev: " + vehicles[i].ParkingCost + " kr.");
+                                                    income.ParkingIncome += vehicles[i].ParkingCost;
+
+                                                    if (vehicles[i].Fined == true)
+                                                    {
+                                                        vehicles[i].ParkingCost += 500;
+                                                        Console.WriteLine("Du betalar även 500 kr för böter.");
+                                                        Console.WriteLine("Din totala kostnad för parkeringen blir " + vehicles[i].ParkingCost + " kr.");
+                                                    }
+
+
                                                     Console.WriteLine("För att betala tryck [B]");
 
                                                     ConsoleKeyInfo key3 = Console.ReadKey();
@@ -169,9 +188,10 @@ namespace ParkeringsAppLunchTrion
                                                         case 'B':
                                                         case 'b':
                                                             Console.WriteLine("Tack för din betalning!");
-                                                            income.ParkingIncome += vehicles[i].ParkingCost;
+                                                            income.TotalIncome += vehicles[i].ParkingCost;
                                                             Helpers.CheckOut(vehicles[i], parkingLot, vehicles, mCs);
                                                             exit2 = true;
+                                                            lyckad2 = true;
                                                             break;
                                                     }
                                                     break;
@@ -206,25 +226,26 @@ namespace ParkeringsAppLunchTrion
                             if (correct == false)
                             {
                                 Console.WriteLine("Du har inte angett ett registreringsnummer som finns registrerat hos oss.");
+                                Console.WriteLine("För att återgå till menyn tryck: [1]?");
+                                Console.WriteLine("För att försöka igen tryck: [2]?");
+                                ConsoleKeyInfo key2 = Console.ReadKey();
+                                Console.Clear();
+                                switch (key2.KeyChar)
+                                {
+                                    case '1':
+                                        return;
+                                        break;
+
+
+                                    case '2':
+
+                                        break;
+
+                                }
                             }
 
-                            Console.WriteLine("För att återgå till menyn tryck: [1]?");
-                            Console.WriteLine("För att försöka igen tryck: [2]?");
 
-                            ConsoleKeyInfo key2 = Console.ReadKey();
-                            Console.Clear();
-                            switch (key2.KeyChar)
-                            {
-                                case '1':
-                                    return income;
-                                    break;
-                                    
-
-                                case '2':
-
-                                    break;
-
-                            }
+                            
 
                         }
 
@@ -240,10 +261,10 @@ namespace ParkeringsAppLunchTrion
                 Console.WriteLine("\n\nTryck på valfri knapp för att gå tillbaka till menyn! ");
 
                 Console.Clear();
-                return income;
+                return;
             }
 
-            return income;
+            return;
 
         }
 

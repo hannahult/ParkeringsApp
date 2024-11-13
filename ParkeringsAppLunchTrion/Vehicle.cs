@@ -17,6 +17,7 @@ namespace ParkeringsAppLunchTrion
         public DateTime EndTime { get; set; }
         public double ParkingCost { get; set; }
 
+        public bool Fined { get; set; }
         public Vehicle(string regNr, string color, int parkingTime)
         {
             RegNr = regNr;
@@ -26,6 +27,7 @@ namespace ParkeringsAppLunchTrion
             StartingTime = DateTime.Now;
             EndTime = CalculateEndTime(parkingTime, StartingTime);
             ParkingCost = 0;
+            Fined = false;
 
         }
 

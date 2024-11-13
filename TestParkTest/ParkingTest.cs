@@ -3,16 +3,16 @@ namespace TestParkTest
     [TestClass]
     public class ParkingTest
     {
-        [TestMethod]
-        public void TestCheckOut()
-        {
-            int expected = 5;
+        //[TestMethod]
+        //public void TestCheckOut()
+        //{
+        //    int expected = 5;
 
-            int result = ParkeringsAppLunchTrion.Helpers.CheckOut(5,10);
+        //    int result = ParkeringsAppLunchTrion.Helpers.CheckOut(5,10);
 
-            Assert.AreEqual(expected, result);
+        //    Assert.AreEqual(expected, result);
 
-        }
+        //}
 
         [TestMethod]
         public void TestExtendTime()

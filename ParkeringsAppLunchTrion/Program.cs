@@ -38,7 +38,7 @@ namespace ParkeringsAppLunchTrion
                         break;
 
                     case '2':
-                        Person.ParkingmanView(vehicles);
+                        Person.ParkingmanView(vehicles, income);
                         break;
 
                     case '3':
