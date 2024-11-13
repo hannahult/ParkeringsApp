@@ -148,7 +148,9 @@ namespace ParkeringsAppLunchTrion
                                         
                                         TimeSpan timeSpan = vehicles[i].EndTime - DateTime.Now;
                                         int time = (int)timeSpan.TotalSeconds;
-                                        Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) +(vehicles[i] is Bus ? " & " + (vehicles[i].ParkingSpot + 2) : "") + "\nDin kvarvarande tid är: " + time);
+                                        Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) +(vehicles[i] is Bus ? " & " + (vehicles[i].ParkingSpot + 2) : "") + 
+                                            (time > 0 ? "\nDin kvarvarande tid är: " + time : "\nDin tid är slut. Var god checka ut eller förläng din tid."));
+
 
                                         TimeSpan timeSpan2 = DateTime.Now - vehicles[i].StartingTime;
                                         int time2 = (int)timeSpan2.TotalSeconds;
