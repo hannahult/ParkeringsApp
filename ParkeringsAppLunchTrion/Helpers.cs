@@ -239,12 +239,12 @@ namespace ParkeringsAppLunchTrion
 
         public static void AddTestVehicles (ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
-            Car testCar = new Car("ABC123", "Blå", true, false, 250);
+            Car testCar = new Car("ABC123", "Blå", true, false, 10);
             vehicles.Add(testCar);
             testCar.ParkingSpot = 3;
             parkingLot.ParkingSpots[3] = 2;
 
-            MC testMC = new MC("DEF456", "Grå", "Yamaha", 200);
+            MC testMC = new MC("DEF456", "Grå", "Yamaha", 30);
             vehicles.Add(testMC);
             testMC.ParkingSpot = 4;
             parkingLot.ParkingSpots[4] = 1;

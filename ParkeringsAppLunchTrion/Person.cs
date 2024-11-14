@@ -84,20 +84,41 @@ namespace ParkeringsAppLunchTrion
                     else if (key.KeyChar == 'b' || key.KeyChar == 'B')
                     {
                         //Console.Clear();
-                        Console.WriteLine("Ange regNr på det fordon du vill bötfälla: ");
+                        Console.WriteLine("\nAnge regNr på det fordon du vill bötfälla: ");
                         string finedVehicle = Console.ReadLine();
                         finedVehicle = finedVehicle.ToUpper();
 
+                        bool vehicleFound = false;
                         for (int i = 0; i < vehicles.Count; i++)
                         {
-                            if (finedVehicle == vehicles[i].RegNr)
+                            TimeSpan timeSpan2 = vehicles[i].EndTime - DateTime.Now;
+                            int time2 = (int)timeSpan2.TotalSeconds;
+
+                            if (finedVehicle == vehicles[i].RegNr && time2 < 0)
                             {
-                                vehicles[i].Fined = true;
-                                income.FineIncome += 500;
-                                Console.WriteLine("Fordon " + vehicles[i].RegNr + " är bötfällt.");
+                                vehicleFound = true;
+                                if (vehicles[i].Fined == true)
+                                {
+                                    Console.WriteLine("\nFordonet är redan bötfällt, kan inte bötfällas igen.");
+                                }
+
+                                else
+                                {
+                                    vehicles[i].Fined = true;
+                                    income.FineIncome += 500;
+                                    Console.WriteLine("Fordon " + vehicles[i].RegNr + " är bötfällt.");
+                                }
+                                break;
                             }
                         }
+                        if (vehicleFound == false)
+                        {
+                            Console.WriteLine("Det här fordonet går inte att bötfälla.");
+
+                        }
+                        
                     }
+                    Thread.Sleep(3000);
                 }
                        
                 Thread.Sleep(1000);
