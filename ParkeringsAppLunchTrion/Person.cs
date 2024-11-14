@@ -16,6 +16,8 @@ namespace ParkeringsAppLunchTrion
 
             while (exit == false)
             {
+                vehicles = vehicles.OrderBy(v => v.ParkingSpot).ToList();
+
                 foreach (Vehicle vehicle in vehicles)
                 {
                     if (vehicle.ParkingTime == 0)
