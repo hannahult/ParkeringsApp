@@ -44,10 +44,12 @@ namespace ParkeringsAppLunchTrion
     {
         public bool Electric { get; set; }
 
-        public Car(string regNr, string color, bool electric, int parkingTime) : base(regNr, color, parkingTime)
+        public bool Deluxe { get; set; }
+
+        public Car(string regNr, string color, bool electric, bool deluxe, int parkingTime) : base(regNr, color, parkingTime)
         {
             Electric = electric;
-            
+            Deluxe = deluxe;
         }
     }
 

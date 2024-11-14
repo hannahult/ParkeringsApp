@@ -20,7 +20,11 @@ namespace ParkeringsAppLunchTrion
                 ParkingSpots[i] = 0;
 
             }
-            
+
+            ParkingSpots[0] = 4;
+            ParkingSpots[1] = 4;
+            ParkingSpots[2] = 4;
+
         }
 
         public static void ParkVehicle(ParkingLot parkingLot, Vehicle vehicle, List<MC> mCs)
@@ -49,6 +53,23 @@ namespace ParkeringsAppLunchTrion
                 }
             }
 
+            if (vehicle is Car && ((Car)vehicle).Deluxe == true)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (parkingLot.ParkingSpots[i] == 4)
+                    {
+                        vehicle.ParkingSpot = i;
+                        parkingLot.ParkingSpots[i] = 2;
+
+                        Console.WriteLine($"Bil {vehicle.RegNr} parkerad på plats {i + 1}.");
+                        return;
+
+                    }
+                }
+            }
+            
+
             for (int i = 0; i < parkingLot.ParkingSpots.Length; i++)
             {
                 if (parkingLot.ParkingSpots[i] == 0)
@@ -61,8 +82,8 @@ namespace ParkeringsAppLunchTrion
                             parkingLot.ParkingSpots[i] = 2;
 
                             Console.WriteLine($"Bil {vehicle.RegNr} parkerad på plats {i + 1}.");
-
                         }
+
                         else if (vehicle is Bus)
                         {
                             vehicle.ParkingSpot = i;

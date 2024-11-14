@@ -160,6 +160,7 @@ namespace ParkeringsAppLunchTrion
 
                                         Console.WriteLine("\n\nChecka ut [1]?");
                                         Console.WriteLine("Förlänga tiden [2]?");
+                                        Console.WriteLine("Tillbaka till menyn [3]");
 
                                         if (Console.KeyAvailable)
                                         {
@@ -198,7 +199,6 @@ namespace ParkeringsAppLunchTrion
                                                     }
                                                     break;
 
-
                                                 case '2':
                                                     Console.WriteLine("Fyll i den tid du vill förlänga med i sekunder: ");
                                                     bool lyckad = false;
@@ -211,12 +211,19 @@ namespace ParkeringsAppLunchTrion
                                                             Console.WriteLine("Du har inte angett antal med siffor, ");
                                                         }
                                                     }
-                                                    vehicles[i].ParkingTime = Helpers.ExtendTime(parkingTime, extendedTime);
-                                                    Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) + "\t din nya parkeringstid är: " + vehicles[i].ParkingTime);
-                                                    double newParkingCost = Helpers.CalculatePrice(vehicles[i].ParkingTime);
+                                                    Helpers.CalculateExendedTime(extendedTime, vehicles[i]);
+                                                    TimeSpan timeSpan3 = vehicles[i].EndTime - DateTime.Now;
+                                                    int time3 = (int)timeSpan3.TotalSeconds;
+                                                    Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) + "\t din nya parkeringstid är: " + time3);
+                                                    double newParkingCost = Helpers.CalculatePrice(time3);
                                                     Console.WriteLine("Den nya kostnaden för parkeringen är: " + newParkingCost + " kr.");
-                                                    exit2 = true;
+                                                    //exit2 = true;
+                                                    lyckad2 = true;
+                                                    Thread.Sleep(3000);
                                                     break;
+
+                                                case '3':
+                                                    return;
                                                 }
                                             }
                                         Thread.Sleep(1000);

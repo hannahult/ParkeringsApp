@@ -74,17 +74,33 @@ namespace ParkeringsAppLunchTrion
                     Console.WriteLine("Är det en elbil?");
                     Console.WriteLine("[1] ja");
                     Console.WriteLine("[2] nej");
-                    ConsoleKeyInfo key1 = Console.ReadKey();                   
+                    ConsoleKeyInfo key1 = Console.ReadKey();
+                    bool electric = true;
                     switch (key1.KeyChar)
                     {
                         case '1':
-                            Car car1 = new Car(regNumber, vehicleColor, true, parkingTime);
+                            electric = true;
+                            break;
+
+                        case '2':
+                            electric = false;
+                            break;
+                    }
+
+                    Console.WriteLine("Vill du parkera på en deluxe-parkering? Parkeringsplats nära utgång för 0.75kr extra");
+                    Console.WriteLine("[1] ja");
+                    Console.WriteLine("[2] nej");
+                    ConsoleKeyInfo key2 = Console.ReadKey();
+                    switch (key2.KeyChar)
+                    {
+                        case '1':
+                            Car car1 = new Car(regNumber, vehicleColor, (electric == true ? true : false), true, parkingTime);
                             vehicles.Add(car1);
                             ParkingLot.ParkVehicle(parkingLot, car1, mCs);
                             break;
 
                         case '2':
-                            Car car2 = new Car(regNumber, vehicleColor, false, parkingTime);
+                            Car car2 = new Car(regNumber, vehicleColor, (electric == true ? true : false), false, parkingTime);
                             vehicles.Add(car2);
                             ParkingLot.ParkVehicle(parkingLot, car2, mCs);
                             break;
@@ -134,6 +150,14 @@ namespace ParkeringsAppLunchTrion
             return parkedTime;
         }
 
+        public static void CalculateExendedTime(int extendedTime, Vehicle vehicle)
+        {
+            TimeSpan timeSpan = TimeSpan.FromSeconds(extendedTime);
+
+            vehicle.EndTime += timeSpan;
+
+        }
+
         public static void CheckOut(Vehicle vehicle, ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
             
@@ -179,23 +203,23 @@ namespace ParkeringsAppLunchTrion
 
         public static void AddTestVehicles (ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
-            Car testCar = new Car("ABC123", "Blå", true, 250);
+            Car testCar = new Car("ABC123", "Blå", true, false, 250);
             vehicles.Add(testCar);
-            testCar.ParkingSpot = 0;
-            parkingLot.ParkingSpots[0] = 2;
+            testCar.ParkingSpot = 3;
+            parkingLot.ParkingSpots[3] = 2;
 
             MC testMC = new MC("DEF456", "Grå", "Yamaha", 200);
             vehicles.Add(testMC);
-            testMC.ParkingSpot = 1;
-            parkingLot.ParkingSpots[1] = 1;
+            testMC.ParkingSpot = 4;
+            parkingLot.ParkingSpots[4] = 1;
             mCs.Add(testMC);
             
 
             Bus testBus = new Bus("GHI789", "Röd", 8, 230);
             vehicles.Add(testBus);
-            testBus.ParkingSpot = 2;
-            parkingLot.ParkingSpots[2] = 2;
-            parkingLot.ParkingSpots[3] = 2;
+            testBus.ParkingSpot = 5;
+            parkingLot.ParkingSpots[5] = 2;
+            parkingLot.ParkingSpots[6] = 2;
 
         }
 
