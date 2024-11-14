@@ -87,24 +87,47 @@ namespace ParkeringsAppLunchTrion
                             break;
                     }
 
-                    Console.WriteLine("Vill du parkera på en deluxe-parkering? Parkeringsplats nära utgång för 0.75kr extra");
-                    Console.WriteLine("[1] ja");
-                    Console.WriteLine("[2] nej");
-                    ConsoleKeyInfo key2 = Console.ReadKey();
-                    switch (key2.KeyChar)
+                    bool deluxeAvaliable = false;
+                    for (int i = 0; i < 3; i++)
                     {
-                        case '1':
-                            Car car1 = new Car(regNumber, vehicleColor, (electric == true ? true : false), true, parkingTime);
-                            vehicles.Add(car1);
-                            ParkingLot.ParkVehicle(parkingLot, car1, mCs);
-                            break;
+                        if (parkingLot.ParkingSpots[i] == 4)
+                        {
+                            Console.WriteLine("\nVill du parkera på en deluxe-parkering? Parkeringsplats nära utgång för 0.75kr extra");
+                            Console.WriteLine("[1] ja");
+                            Console.WriteLine("[2] nej");
+                            ConsoleKeyInfo key2 = Console.ReadKey();
+                            switch (key2.KeyChar)
+                            {
+                                case '1':
+                                    Car car1 = new Car(regNumber, vehicleColor, (electric == true ? true : false), true, parkingTime);
+                                    vehicles.Add(car1);
+                                    ParkingLot.ParkVehicle(parkingLot, car1, mCs);
+                                    break;
 
-                        case '2':
-                            Car car2 = new Car(regNumber, vehicleColor, (electric == true ? true : false), false, parkingTime);
-                            vehicles.Add(car2);
-                            ParkingLot.ParkVehicle(parkingLot, car2, mCs);
+                                case '2':
+                                    Car car2 = new Car(regNumber, vehicleColor, (electric == true ? true : false), false, parkingTime);
+                                    vehicles.Add(car2);
+                                    ParkingLot.ParkVehicle(parkingLot, car2, mCs);
+                                    break;
+                            }
+                            deluxeAvaliable = true;
                             break;
+                        }
+                            
+
+                        
                     }
+
+                    
+                    if (deluxeAvaliable == false)
+                    {
+                        Console.WriteLine("\nVåra deluxeparkeringar är tyvärr fulla. Du kommer bli tilldelad en vanlig parkeringsplats");
+                        Thread.Sleep(4000);
+                        Car car3 = new Car(regNumber, vehicleColor, (electric == true ? true : false), false, parkingTime);
+                        vehicles.Add(car3);
+                        ParkingLot.ParkVehicle(parkingLot, car3, mCs);
+                    }
+
                     break;
 
                 case '1': //Buss
@@ -160,16 +183,23 @@ namespace ParkeringsAppLunchTrion
 
         public static void CheckOut(Vehicle vehicle, ParkingLot parkingLot, List<Vehicle> vehicles, List<MC> mCs)
         {
-            
 
-            if (vehicle is MC)
+            if (vehicle is Car && ((Car)vehicle).Deluxe == true)
             {
-                parkingLot.ParkingSpots[vehicle.ParkingSpot]--;
-                mCs.Remove((MC)vehicle);
+                parkingLot.ParkingSpots[vehicle.ParkingSpot] = 4;
             }
+
             else
             {
-                parkingLot.ParkingSpots[vehicle.ParkingSpot] = 0;
+                if (vehicle is MC)
+                {
+                    parkingLot.ParkingSpots[vehicle.ParkingSpot]--;
+                    mCs.Remove((MC)vehicle);
+                }
+                else
+                {
+                    parkingLot.ParkingSpots[vehicle.ParkingSpot] = 0;
+                }
             }
 
             vehicles.Remove(vehicle);
@@ -187,9 +217,15 @@ namespace ParkeringsAppLunchTrion
 
         }
 
-        public static double CalculatePrice(double parkedTime)
+        public static double CalculatePrice(double parkedTime, Vehicle vehicle)
         {
             parkedTime = Math.Abs(parkedTime);
+
+            if (vehicle is Car && ((Car)vehicle).Deluxe == true)
+            {
+                return parkedTime * 2.25;
+            }
+            
             return parkedTime * 1.5;
         }
 
@@ -220,6 +256,16 @@ namespace ParkeringsAppLunchTrion
             testBus.ParkingSpot = 5;
             parkingLot.ParkingSpots[5] = 2;
             parkingLot.ParkingSpots[6] = 2;
+
+            Car testDeluxeCar = new Car("JKL123", "Blå", true, true, 250);
+            vehicles.Add(testDeluxeCar);
+            testDeluxeCar.ParkingSpot = 0;
+            parkingLot.ParkingSpots[0] = 2;
+
+            Car testDeluxeCar2 = new Car("MNO456", "Blå", true, true, 250);
+            vehicles.Add(testDeluxeCar2);
+            testDeluxeCar2.ParkingSpot = 1;
+            parkingLot.ParkingSpots[1] = 2;
 
         }
 

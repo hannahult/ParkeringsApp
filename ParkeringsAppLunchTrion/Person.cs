@@ -156,7 +156,7 @@ namespace ParkeringsAppLunchTrion
 
                                         TimeSpan timeSpan2 = DateTime.Now - vehicles[i].StartingTime;
                                         int time2 = (int)timeSpan2.TotalSeconds;
-                                        Console.WriteLine("Kostnad för parkering hittills: " + (time2*1.5) + "kr (exklusive eventuella böter)");
+                                        Console.WriteLine("\nKostnad för parkering hittills: " + Helpers.CalculatePrice(time2, vehicles[i]) + "kr (exklusive eventuella böter)");
                                       
                                         int parkingTime = vehicles[i].ParkingTime;
 
@@ -172,15 +172,15 @@ namespace ParkeringsAppLunchTrion
                                                 case '1':
                                                     DateTime checkOutTime = DateTime.Now;
                                                     double parkedTime = Helpers.CalculateParkedTime(checkOutTime, vehicles[i]);
-                                                    vehicles[i].ParkingCost += Helpers.CalculatePrice(parkedTime);
-                                                    Console.WriteLine("Kostnaden för den parkerade tiden blev: " + vehicles[i].ParkingCost + " kr.");
+                                                    vehicles[i].ParkingCost += Helpers.CalculatePrice(parkedTime, vehicles[i]);
+                                                    Console.WriteLine("\nKostnaden för den parkerade tiden blev: " + vehicles[i].ParkingCost + " kr.");
                                                     income.ParkingIncome += vehicles[i].ParkingCost;
 
                                                     if (vehicles[i].Fined == true)
                                                     {
                                                         vehicles[i].ParkingCost += 500;
                                                         Console.WriteLine("Du betalar även 500 kr för böter.");
-                                                        Console.WriteLine("Din totala kostnad för parkeringen blir " + vehicles[i].ParkingCost + " kr.");
+                                                        Console.WriteLine("\nDin totala kostnad för parkeringen blir " + vehicles[i].ParkingCost + " kr.");
                                                     }
 
 
@@ -217,8 +217,8 @@ namespace ParkeringsAppLunchTrion
                                                     TimeSpan timeSpan3 = vehicles[i].EndTime - DateTime.Now;
                                                     int time3 = (int)timeSpan3.TotalSeconds;
                                                     Console.WriteLine("Du har plats " + (vehicles[i].ParkingSpot + 1) + "\t din nya parkeringstid är: " + time3);
-                                                    double newParkingCost = Helpers.CalculatePrice(time3);
-                                                    Console.WriteLine("Den nya kostnaden för parkeringen är: " + newParkingCost + " kr.");
+                                                    double newParkingCost = Helpers.CalculatePrice(time3, vehicles[i]);
+                                                    Console.WriteLine("\nDen nya kostnaden för parkeringen är: " + newParkingCost + " kr.");
                                                     //exit2 = true;
                                                     lyckad2 = true;
                                                     Thread.Sleep(3000);
