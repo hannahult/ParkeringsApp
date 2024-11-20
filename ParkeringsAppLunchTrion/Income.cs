@@ -18,7 +18,7 @@ namespace ParkeringsAppLunchTrion
             ParkingIncome = 0;
             FineIncome = 0;
             TotalIncome = 0;
-            NumberOfVehicles = 3;
+            NumberOfVehicles = 5;
         }
 
     }

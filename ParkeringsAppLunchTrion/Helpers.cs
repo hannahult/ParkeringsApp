@@ -244,25 +244,25 @@ namespace ParkeringsAppLunchTrion
             testCar.ParkingSpot = 3;
             parkingLot.ParkingSpots[3] = 2;
 
-            MC testMC = new MC("DEF456", "Grå", "Yamaha", 30);
+            MC testMC = new MC("DEF456", "Grå", "Yamaha", 650);
             vehicles.Add(testMC);
             testMC.ParkingSpot = 4;
             parkingLot.ParkingSpots[4] = 1;
             mCs.Add(testMC);
             
 
-            Bus testBus = new Bus("GHI789", "Röd", 8, 230);
+            Bus testBus = new Bus("GHI789", "Röd", 8, 550);
             vehicles.Add(testBus);
             testBus.ParkingSpot = 5;
             parkingLot.ParkingSpots[5] = 2;
             parkingLot.ParkingSpots[6] = 2;
 
-            Car testDeluxeCar = new Car("JKL123", "Blå", true, true, 250);
+            Car testDeluxeCar = new Car("JKL123", "Blå", true, true, 650);
             vehicles.Add(testDeluxeCar);
             testDeluxeCar.ParkingSpot = 0;
             parkingLot.ParkingSpots[0] = 2;
 
-            Car testDeluxeCar2 = new Car("MNO456", "Blå", true, true, 250);
+            Car testDeluxeCar2 = new Car("MNO456", "Blå", true, true, 850);
             vehicles.Add(testDeluxeCar2);
             testDeluxeCar2.ParkingSpot = 1;
             parkingLot.ParkingSpots[1] = 2;
