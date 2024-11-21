@@ -1,18 +1,10 @@
+using ParkeringsAppLunchTrion;
+
 namespace TestParkTest
 {
     [TestClass]
     public class ParkingTest
     {
-        //[TestMethod]
-        //public void TestCheckOut()
-        //{
-        //    int expected = 5;
-
-        //    int result = ParkeringsAppLunchTrion.Helpers.CheckOut(5,10);
-
-        //    Assert.AreEqual(expected, result);
-
-        //}
 
         [TestMethod]
         public void TestExtendTime()
@@ -24,11 +16,13 @@ namespace TestParkTest
             Assert.AreEqual(expected, result);
         }
 
+
+        //Gamla testmetoden för kostnadsuträkning (innan vi la till deluxeparkeringar)
         [TestMethod]
-        public void TestCalculatePrice()
+        public void TestCalculateCost()
         {
             double expected = 15;
-            double result = ParkeringsAppLunchTrion.Helpers.CalculatePrice(10);
+            double result = ParkeringsAppLunchTrion.Helpers.CalculateCost(10);
 
             Assert.AreEqual(expected, result);
         }

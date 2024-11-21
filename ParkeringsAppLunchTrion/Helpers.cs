@@ -217,6 +217,15 @@ namespace ParkeringsAppLunchTrion
 
         }
 
+
+        //Gamla metoden för kostnadsuträkning (innan vi la till deluxeparkeringar)
+        public static double CalculateCost(double parkedTime)
+        {
+            parkedTime = Math.Abs(parkedTime);
+
+            return parkedTime * 1.5;
+        }
+
         public static double CalculatePrice(double parkedTime, Vehicle vehicle)
         {
             parkedTime = Math.Abs(parkedTime);
