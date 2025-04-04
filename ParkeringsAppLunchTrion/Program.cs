@@ -18,9 +18,6 @@ namespace ParkeringsAppLunchTrion
 
             Income income = new Income();
 
-            //parkingLots = 
-            
-
             Helpers.AddTestVehicles(parkingLot, vehicles, mCs);
             while (true)
             {
@@ -45,12 +42,6 @@ namespace ParkeringsAppLunchTrion
                         Person.TheBossView(income);
                         break;
                 }
-
-                
-
-
-               
-
 
             }
 
